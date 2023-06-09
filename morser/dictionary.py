@@ -55,3 +55,6 @@ ENCODE_TABLE: dict[str, str] = {
     '$': '...-..-',
     '@': '.--.-.',
 }
+
+DECODE_TABLE = {value: key for key, value in ENCODE_TABLE.items()}
+DECODE_TABLE['<space>'] = DECODE_TABLE.pop(' ')

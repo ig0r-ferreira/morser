@@ -1,6 +1,6 @@
 import pytest
 
-from morser import encode
+from morser import decode, encode
 
 
 def test_encode_empty_string_should_return_an_error() -> None:
@@ -105,3 +105,40 @@ def test_encode_a_sentence() -> None:
         result
         == '.--. .-. --- --. .-. .- -- -- .. -. --.   .. ...   -.-. --- --- .-.. .-.-.-'
     )
+
+
+def test_decode_empty_string_should_return_an_error() -> None:
+    with pytest.raises(
+        ValueError, match="Parameter 'morse_code' is an empty string."
+    ):
+        decode(' ')
+
+
+def test_decode_morse_code_with_invalid_spaces_should_return_an_error() -> None:
+    with pytest.raises(
+        ValueError, match='Morse code contains invalid spaces.'
+    ):
+        decode('.... . .-.. .-.. ---      .-- --- .-. .-.. -..')
+
+
+def test_decode_morse_code_with_invalid_characters() -> None:
+    with pytest.raises(
+        ValueError, match='Morse code contains invalid characters.'
+    ):
+        decode('.... . .-.. .-.. @   .-- --- .-. .-.. -..')
+
+
+def test_encode_and_decode_a_text() -> None:
+    text = (
+        'Lorem Ipsum is simply dummy text of the printing and typesetting '
+        "industry. Lorem Ipsum has been the industry's standard dummy text ever "
+        'since the 1500s, when an unknown printer took a galley of type and '
+        'scrambled it to make a type specimen book. It has survived not only five '
+        'centuries, but also the leap into electronic typesetting, remaining '
+        'essentially unchanged. It was popularised in the 1960s with the release '
+        'of Letraset sheets containing Lorem Ipsum passages, and more recently '
+        'with desktop publishing software like Aldus PageMaker including versions '
+        'of Lorem Ipsum.'
+    )
+    result = encode(text)
+    assert decode(result) == text.upper()
