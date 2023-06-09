@@ -1,4 +1,4 @@
-TRANSLATION_TABLE: dict[str, str] = {
+ENCODE_TABLE: dict[str, str] = {
     'A': '.-',
     'B': '-...',
     'C': '-.-.',
@@ -25,7 +25,7 @@ TRANSLATION_TABLE: dict[str, str] = {
     'X': '-..-',
     'Y': '-.--',
     'Z': '--..',
-    ' ': '/',
+    ' ': ' ',
     '0': '-----',
     '1': '.----',
     '2': '..---',

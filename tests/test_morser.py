@@ -3,44 +3,105 @@ import pytest
 from morser import encode
 
 
+def test_encode_empty_string_should_return_an_error() -> None:
+    with pytest.raises(
+        ValueError, match="Parameter 'plain_text' is an empty string."
+    ):
+        encode(' ')
+
+
+def test_encode_string_with_more_than_one_space_between_words() -> None:
+    result = encode('HELLO                 WORLD')
+    assert result == '.... . .-.. .-.. ---   .-- --- .-. .-.. -..'
+
+
 @pytest.mark.parametrize(
-    'text, expected_result',
+    'letter, expected_output',
     [
-        ('Massachusetts', '-- .- ... ... .- -.-. .... ..- ... . - - ...'),
-        (
-            'Is programming cool?',
-            '.. ... / .--. .-. --- --. .-. .- -- -- .. -. --. / '
-            '-.-. --- --- .-.. ..--..',
-        ),
-        (
-            'September 13, 2023',
-            '... . .--. - . -- -... . .-. / .---- ...-- --..-- / '
-            '..--- ----- ..--- ...--',
-        ),
-        ('Sayōnara', '... .- -.-- # -. .- .-. .-'),
-        (
-            'Morse code is a method used in telecommunication to encode text '
-            'characters as standardized sequences of two different signal '
-            'durations, called dots and dashes, or dits and dahs. Morse code '
-            'is named after Samuel Morse, one of the inventors of the telegraph.',
-            '-- --- .-. ... . / -.-. --- -.. . / .. ... / .- / '
-            '-- . - .... --- -.. / ..- ... . -.. / .. -. / '
-            '- . .-.. . -.-. --- -- -- ..- -. .. -.-. .- - .. --- -. / - --- / '
-            '. -. -.-. --- -.. . / - . -..- - / '
-            '-.-. .... .- .-. .- -.-. - . .-. ... / .- ... / '
-            '... - .- -. -.. .- .-. -.. .. --.. . -.. / '
-            '... . --.- ..- . -. -.-. . ... / --- ..-. / - .-- --- / '
-            '-.. .. ..-. ..-. . .-. . -. - / ... .. --. -. .- .-.. / '
-            '-.. ..- .-. .- - .. --- -. ... --..-- / -.-. .- .-.. .-.. . -.. '
-            '/ -.. --- - ... / .- -. -.. / -.. .- ... .... . ... --..-- / '
-            '--- .-. / -.. .. - ... / .- -. -.. / -.. .- .... ... .-.-.- / '
-            '-- --- .-. ... . / -.-. --- -.. . / .. ... / -. .- -- . -.. / '
-            '.- ..-. - . .-. / ... .- -- ..- . .-.. / -- --- .-. ... . --..-- '
-            '/ --- -. . / --- ..-. / - .... . / .. -. ...- . -. - --- .-. ... '
-            '/ --- ..-. / - .... . / - . .-.. . --. .-. .- .--. .... .-.-.-',
-        ),
+        ('A', '.-'),
+        ('B', '-...'),
+        ('C', '-.-.'),
+        ('D', '-..'),
+        ('E', '.'),
+        ('F', '..-.'),
+        ('G', '--.'),
+        ('H', '....'),
+        ('I', '..'),
+        ('J', '.---'),
+        ('K', '-.-'),
+        ('L', '.-..'),
+        ('M', '--'),
+        ('N', '-.'),
+        ('O', '---'),
+        ('P', '.--.'),
+        ('Q', '--.-'),
+        ('R', '.-.'),
+        ('S', '...'),
+        ('T', '-'),
+        ('U', '..-'),
+        ('V', '...-'),
+        ('W', '.--'),
+        ('X', '-..-'),
+        ('Y', '-.--'),
+        ('Z', '--..'),
     ],
 )
-def test_encode(text: str, expected_result: str) -> None:
-    result = encode(text)
-    assert result == expected_result
+def test_encode_alphabet(letter: str, expected_output: str) -> None:
+    result = encode(letter)
+    assert result == expected_output
+
+
+@pytest.mark.parametrize(
+    'number, expected_output',
+    [
+        ('0', '-----'),
+        ('1', '.----'),
+        ('2', '..---'),
+        ('3', '...--'),
+        ('4', '....-'),
+        ('5', '.....'),
+        ('6', '-....'),
+        ('7', '--...'),
+        ('8', '---..'),
+        ('9', '----.'),
+    ],
+)
+def test_encode_numbers(number: str, expected_output: str) -> None:
+    result = encode(number)
+    assert result == expected_output
+
+
+@pytest.mark.parametrize(
+    'punctuation, expected_output',
+    [
+        ('.', '.-.-.-'),
+        (',', '--..--'),
+        ('?', '..--..'),
+        ("'", '.----.'),
+        ('!', '-.-.--.'),
+        ('/', '-..-.'),
+        ('(', '-.--.'),
+        (')', '-.--.-'),
+        ('&', '.-...'),
+        (':', '---...'),
+        (';', '-.-.-.'),
+        ('=', '-...-'),
+        ('+', '.-.-.'),
+        ('-', '-....-'),
+        ('_', '..--.-'),
+        ('"', '.-..-.'),
+        ('$', '...-..-'),
+        ('@', '.--.-.'),
+    ],
+)
+def test_encode_punctuation(punctuation: str, expected_output: str) -> None:
+    result = encode(punctuation)
+    assert result == expected_output
+
+
+def test_encode_a_sentence() -> None:
+    result = encode('Programming is cool.')
+    assert (
+        result
+        == '.--. .-. --- --. .-. .- -- -- .. -. --.   .. ...   -.-. --- --- .-.. .-.-.-'
+    )
