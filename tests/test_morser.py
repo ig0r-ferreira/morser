@@ -1,17 +1,17 @@
 import pytest
 
-from morser import decode, encode
+from morser import decode_morse_code, encode_text_to_morse_code
 
 
 def test_encode_empty_string_should_return_an_error() -> None:
     with pytest.raises(
         ValueError, match="Parameter 'plain_text' is an empty string."
     ):
-        encode(' ')
+        encode_text_to_morse_code(' ')
 
 
 def test_encode_string_with_more_than_one_space_between_words() -> None:
-    result = encode('HELLO                 WORLD')
+    result = encode_text_to_morse_code('HELLO                 WORLD')
     assert result == '.... . .-.. .-.. ---   .-- --- .-. .-.. -..'
 
 
@@ -47,7 +47,7 @@ def test_encode_string_with_more_than_one_space_between_words() -> None:
     ],
 )
 def test_encode_alphabet(letter: str, expected_output: str) -> None:
-    result = encode(letter)
+    result = encode_text_to_morse_code(letter)
     assert result == expected_output
 
 
@@ -67,7 +67,7 @@ def test_encode_alphabet(letter: str, expected_output: str) -> None:
     ],
 )
 def test_encode_numbers(number: str, expected_output: str) -> None:
-    result = encode(number)
+    result = encode_text_to_morse_code(number)
     assert result == expected_output
 
 
@@ -95,12 +95,12 @@ def test_encode_numbers(number: str, expected_output: str) -> None:
     ],
 )
 def test_encode_punctuation(punctuation: str, expected_output: str) -> None:
-    result = encode(punctuation)
+    result = encode_text_to_morse_code(punctuation)
     assert result == expected_output
 
 
 def test_encode_a_sentence() -> None:
-    result = encode('Programming is cool.')
+    result = encode_text_to_morse_code('Programming is cool.')
     assert (
         result
         == '.--. .-. --- --. .-. .- -- -- .. -. --.   .. ...   -.-. --- --- .-.. .-.-.-'
@@ -111,21 +111,21 @@ def test_decode_empty_string_should_return_an_error() -> None:
     with pytest.raises(
         ValueError, match="Parameter 'morse_code' is an empty string."
     ):
-        decode(' ')
+        decode_morse_code(' ')
 
 
 def test_decode_morse_code_with_invalid_spaces_should_return_an_error() -> None:
     with pytest.raises(
         ValueError, match='Morse code contains invalid spaces.'
     ):
-        decode('.... . .-.. .-.. ---      .-- --- .-. .-.. -..')
+        decode_morse_code('.... . .-.. .-.. ---      .-- --- .-. .-.. -..')
 
 
 def test_decode_morse_code_with_invalid_characters() -> None:
     with pytest.raises(
         ValueError, match='Morse code contains invalid characters.'
     ):
-        decode('.... . .-.. .-.. @   .-- --- .-. .-.. -..')
+        decode_morse_code('.... . .-.. .-.. @   .-- --- .-. .-.. -..')
 
 
 def test_encode_and_decode_a_text() -> None:
@@ -140,5 +140,5 @@ def test_encode_and_decode_a_text() -> None:
         'with desktop publishing software like Aldus PageMaker including versions '
         'of Lorem Ipsum.'
     )
-    result = encode(text)
-    assert decode(result) == text.upper()
+    result = encode_text_to_morse_code(text)
+    assert decode_morse_code(result) == text.upper()

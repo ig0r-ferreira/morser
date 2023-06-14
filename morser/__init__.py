@@ -7,7 +7,7 @@ def _format_spaces_between_words(text: str) -> str:
     return re.sub(r'\s{1,}', ' ', text.strip())
 
 
-def encode(plain_text: str) -> str:
+def encode_text_to_morse_code(plain_text: str) -> str:
     """Encode a plain text to morse code."""
     if plain_text.isspace():
         raise ValueError("Parameter 'plain_text' is an empty string.")
@@ -18,7 +18,7 @@ def encode(plain_text: str) -> str:
     )
 
 
-def decode(morse_code: str) -> str:
+def decode_morse_code(morse_code: str) -> str:
     """Decode morse code to plain text."""
     if morse_code.isspace():
         raise ValueError("Parameter 'morse_code' is an empty string.")
