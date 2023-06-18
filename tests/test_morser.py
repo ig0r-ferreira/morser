@@ -2,6 +2,8 @@ import pytest
 
 from morser import decode_morse_code, encode_text_to_morse_code
 
+from .conftest import ALPHABET_CASES, DIGIT_CASES, PUNCTUATION_CASES
+
 
 def test_encode_empty_string_should_return_an_error() -> None:
     with pytest.raises(
@@ -15,85 +17,19 @@ def test_encode_string_with_more_than_one_space_between_words() -> None:
     assert result == '.... . .-.. .-.. ---   .-- --- .-. .-.. -..'
 
 
-@pytest.mark.parametrize(
-    'letter, expected_output',
-    [
-        ('A', '.-'),
-        ('B', '-...'),
-        ('C', '-.-.'),
-        ('D', '-..'),
-        ('E', '.'),
-        ('F', '..-.'),
-        ('G', '--.'),
-        ('H', '....'),
-        ('I', '..'),
-        ('J', '.---'),
-        ('K', '-.-'),
-        ('L', '.-..'),
-        ('M', '--'),
-        ('N', '-.'),
-        ('O', '---'),
-        ('P', '.--.'),
-        ('Q', '--.-'),
-        ('R', '.-.'),
-        ('S', '...'),
-        ('T', '-'),
-        ('U', '..-'),
-        ('V', '...-'),
-        ('W', '.--'),
-        ('X', '-..-'),
-        ('Y', '-.--'),
-        ('Z', '--..'),
-    ],
-)
+@pytest.mark.parametrize('letter, expected_output', ALPHABET_CASES)
 def test_encode_alphabet(letter: str, expected_output: str) -> None:
     result = encode_text_to_morse_code(letter)
     assert result == expected_output
 
 
-@pytest.mark.parametrize(
-    'number, expected_output',
-    [
-        ('0', '-----'),
-        ('1', '.----'),
-        ('2', '..---'),
-        ('3', '...--'),
-        ('4', '....-'),
-        ('5', '.....'),
-        ('6', '-....'),
-        ('7', '--...'),
-        ('8', '---..'),
-        ('9', '----.'),
-    ],
-)
-def test_encode_numbers(number: str, expected_output: str) -> None:
-    result = encode_text_to_morse_code(number)
+@pytest.mark.parametrize('digit, expected_output', DIGIT_CASES)
+def test_encode_digits(digit: str, expected_output: str) -> None:
+    result = encode_text_to_morse_code(digit)
     assert result == expected_output
 
 
-@pytest.mark.parametrize(
-    'punctuation, expected_output',
-    [
-        ('.', '.-.-.-'),
-        (',', '--..--'),
-        ('?', '..--..'),
-        ("'", '.----.'),
-        ('!', '-.-.--.'),
-        ('/', '-..-.'),
-        ('(', '-.--.'),
-        (')', '-.--.-'),
-        ('&', '.-...'),
-        (':', '---...'),
-        (';', '-.-.-.'),
-        ('=', '-...-'),
-        ('+', '.-.-.'),
-        ('-', '-....-'),
-        ('_', '..--.-'),
-        ('"', '.-..-.'),
-        ('$', '...-..-'),
-        ('@', '.--.-.'),
-    ],
-)
+@pytest.mark.parametrize('punctuation, expected_output', PUNCTUATION_CASES)
 def test_encode_punctuation(punctuation: str, expected_output: str) -> None:
     result = encode_text_to_morse_code(punctuation)
     assert result == expected_output
