@@ -1,9 +1,22 @@
 [tool.poetry]
 name = "morser"
 version = "0.1.0"
-description = "Morse code encoder and decoder."
+description = "Morser is a CLI for encoding and decoding morse code."
 authors = ["Igor Ferreira <iferreira.n01@gmail.com>"]
 readme = "README.md"
+license = "MIT"
+packages = [{include = "morser"}]
+classifiers = [
+    "Intended Audience :: Developers",
+    "Environment :: Console",
+    "Natural Language :: English",
+    "Development Status :: 5 - Production/Stable",
+    "Programming Language :: Python :: 3.11"
+]
+
+[tool.poetry.urls]
+"Source Code" = "https://github.com/ig0r-ferreira/morser"
+"Bug Tracker" = "https://github.com/ig0r-ferreira/morser/issues"
 
 [tool.poetry.scripts]
 morser = "morser.cli:app"
