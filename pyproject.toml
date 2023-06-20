@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "morser"
-version = "0.1.0"
+version = "0.1.1"
 description = "Morser is a CLI for encoding and decoding morse code."
 authors = ["Igor Ferreira <iferreira.n01@gmail.com>"]
 readme = "README.md"

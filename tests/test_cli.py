@@ -1,7 +1,7 @@
 import pytest
 from typer.testing import CliRunner
 
-from morser.cli import app
+from morser.cli import __version__, app
 
 from .conftest import ALPHABET_CASES, DIGIT_CASES, PUNCTUATION_CASES
 
@@ -31,3 +31,10 @@ def test_decode_command_should_display_the_result(
 
     assert result.exit_code == 0
     assert result.stdout == f'{expected_result}\n'
+
+
+def test_version_option() -> None:
+    result = runner.invoke(app, ['--version'])
+
+    assert result.exit_code == 0
+    assert result.stdout == f'{app.info.name} {__version__}\n'
